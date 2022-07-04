@@ -56,6 +56,8 @@ dependencies {
 
     implementation "com.typesafe.akka:akka-cluster_2.13"
 
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
 }
 
 testing {

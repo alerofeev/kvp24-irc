@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainScene" prefHeight="760.0" prefWidth="1000.0" stylesheets="@../style/main.css"
-            xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.github.ghilsidoll.irc.controller.MainSceneController">
+<BorderPane fx:id="mainScene" prefHeight="760.0" prefWidth="1000.0" stylesheets="@../style/main.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.ghilsidoll.irc.controller.MainSceneController">
    <left>
       <HBox>
-         <VBox prefHeight="754.0" prefWidth="370.0" styleClass="container-background-color"
-               BorderPane.alignment="CENTER">
+         <VBox prefHeight="754.0" prefWidth="370.0" styleClass="background-color-default" BorderPane.alignment="CENTER">
             <HBox alignment="CENTER" prefHeight="26.0" prefWidth="340.0">
                <Label contentDisplay="BOTTOM" prefHeight="46.0" text="Чаты" textAlignment="CENTER" textFill="WHITE">
                   <font>
@@ -44,22 +47,62 @@
                   <Image url="@../image/plus.png" />
                </ImageView>
                <VBox.margin>
-                  <Insets top="20.0" />
+                  <Insets />
                </VBox.margin>
+               <padding>
+                  <Insets bottom="20.0" top="20.0" />
+               </padding>
             </HBox>
+            <VBox prefHeight="650.0" prefWidth="370.0">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="74.0" prefWidth="200.0" stylesheets="@../style/main.css">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="20.0" right="20.0" top="30.0" />
+                     </VBox.margin>
+                     <styleClass>
+                        <String fx:value="message-box-background-color" />
+                        <String fx:value="background-radius-sm" />
+                     </styleClass>
+                     <children>
+                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                           <HBox.margin>
+                              <Insets left="15.0" />
+                           </HBox.margin>
+                           <Image url="@../image/user.png" />
+                        </ImageView>
+                        <VBox alignment="CENTER_LEFT" prefHeight="74.0" prefWidth="199.0">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                           <padding>
+                              <Insets bottom="15.0" top="15.0" />
+                           </padding>
+                           <Label prefHeight="23.0" prefWidth="198.0" text="username" textFill="WHITE">
+                              <font>
+                                 <Font size="17.0" />
+                              </font>
+                           </Label>
+                           <Pane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                           <Label text="message preview" textFill="#616161" />
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
          </VBox>
-         <Pane prefHeight="200.0" prefWidth="2.0" styleClass="border-color" stylesheets="@../style/main.css" />
+         <Pane prefHeight="200.0" prefWidth="2.0" styleClass="border-color-default" stylesheets="@../style/main.css" />
       </HBox>
    </left>
    <top>
-      <VBox prefHeight="46.0" prefWidth="1000.0" styleClass="container-background-color"
-            stylesheets="@../style/main.css" BorderPane.alignment="CENTER">
-         <HBox prefHeight="44.0" prefWidth="1000.0"/>
-         <Pane prefHeight="2.0" prefWidth="200.0" styleClass="border-color" stylesheets="@../style/main.css"/>
+      <VBox prefHeight="46.0" prefWidth="1000.0" styleClass="background-color-default" stylesheets="@../style/main.css" BorderPane.alignment="CENTER">
+         <HBox prefHeight="44.0" prefWidth="1000.0" />
+         <Pane prefHeight="2.0" prefWidth="200.0" styleClass="border-color-default" stylesheets="@../style/main.css" />
       </VBox>
    </top>
    <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" styleClass="container-background-color"
-            BorderPane.alignment="CENTER" />
+      <VBox prefHeight="200.0" prefWidth="100.0" styleClass="background-color-default" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>
