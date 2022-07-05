@@ -20,6 +20,15 @@
     -fx-background-color: #231b2f;
 }
 
+.message-box-background-color:hover {
+    -fx-background-color: #251c38;
+
+}
+
+.message-box-background-color:pressed {
+    -fx-background-color: #ccc;
+}
+
 .border-none {
     -fx-border-style: hidden;
 }

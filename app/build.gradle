@@ -49,9 +49,6 @@ dependencies {
     // https://mvnrepository.com/artifact/org.openjfx/javafx
     implementation group: 'org.openjfx', name: 'javafx', version: '18', ext: 'pom'
 
-    // https://mvnrepository.com/artifact/com.jfoenix/jfoenix
-    implementation group: 'com.jfoenix', name: 'jfoenix', version: '9.0.10'
-
     implementation platform("com.typesafe.akka:akka-bom_2.13:2.6.19")
 
     implementation "com.typesafe.akka:akka-cluster_2.13"
