@@ -1,38 +1,67 @@
-/* xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.ghilsidoll.irc.controller.MainSceneController" */
-
 .background-color-default {
-    -fx-background-color: #161224;
+    -fx-background-color: #161224
+}
+
+.background-color-gradient {
+    -fx-background-color: linear-gradient(to bottom, #220d56, #161224);
 }
 
 .background-color-transparent {
-    -fx-background-color: rgba(0, 0, 0, 0);
+    -fx-background-color: rgba(0, 0, 0, 0)
 }
 
 .border-color-default {
-    -fx-background-color: #231b2f;
+    -fx-background-color: #231b2f
 }
 
 .background-radius-sm {
-    -fx-background-radius: 20px;
+    -fx-background-radius: 20px
 }
 
 .message-box-background-color {
-    -fx-background-color: #231b2f;
+    -fx-background-color: #231b2f
 }
 
 .message-box-background-color:hover {
-    -fx-background-color: #251c38;
-
+    -fx-background-color: #251c38
 }
 
 .message-box-background-color:pressed {
-    -fx-background-color: #ccc;
+    -fx-background-color: #ccc
 }
 
 .border-none {
-    -fx-border-style: hidden;
+    -fx-border-style: hidden
 }
 
-.scroll-pane > .corner {
-    -fx-background-color: #161224;
+/* Authorization scene styles */
+
+.login-text-field {
+    -fx-accent: #161224;
+    -fx-background-color: rgba(41, 22, 73, 0.5), #161224;
+    -fx-background-insets: 0, 0 0 3 0;
+    -fx-background-radius: 0;
+    -fx-text-fill: #ccc;
 }
+
+.login-text-field:focused {
+   -fx-background-color: #291649, #161224
+}
+
+.login-button {
+    -fx-border-style: hidden !important;
+    -fx-border-radius: 0 !important;
+    -fx-background-radius: 0 !important;
+    -fx-background-color: rgba(41, 22, 73, 0.5);
+    -fx-text-fill: #ccc;
+}
+
+.login-button:hover {
+    -fx-background-color: rgba(41, 22, 73, 0.7);
+}
+
+.login-button:pressed {
+    -fx-background-color: rgba(41, 22, 73, 0.3);
+}
+
+/* !Authorization scene styles */
