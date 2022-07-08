@@ -1,14 +1,9 @@
 package com.github.ghilsidoll.irc.controller
 
 import javafx.application.Platform
-import javafx.event.Event
-import javafx.fxml.{FXML, FXMLLoader}
-import javafx.scene.{Node, Parent, Scene}
+import javafx.fxml.FXML
 import javafx.scene.control.{Button, TextField}
 import javafx.scene.layout.BorderPane
-import javafx.stage.{Screen, Stage}
-
-import java.util.Objects
 
 class LoginSceneController {
 
@@ -28,24 +23,11 @@ class LoginSceneController {
       error = true
     }
 
-    // TODO: add validation by symbols
+    // TODO add validation by symbols
 
-    // TODO: add validation by uniqueness
+    // TODO add validation by uniqueness
 
-    error
-  }
-
-  private def loadMainScene(event: Event): Unit = {
-    val screenBounds = Screen.getPrimary.getVisualBounds
-    val window = event.getSource.asInstanceOf[Node].getScene.getWindow
-    val stage = window.asInstanceOf[Stage]
-    val root: Parent = FXMLLoader.load(Objects.requireNonNull(getClass.getResource("/com/github/ghilsidoll/" +
-      "irc/view/mainScene.fxml")))
-
-    stage.setScene(new Scene(root, 1000, 760))
-
-    window.setX((screenBounds.getWidth - stage.getWidth) / 2)
-    window.setY((screenBounds.getHeight - stage.getHeight) / 2)
+    !error
   }
 
   def initialize(): Unit = {
@@ -53,11 +35,19 @@ class LoginSceneController {
     mainScene.setOnMouseClicked(_ => mainScene.requestFocus())
 
     loginButton.setOnAction(event => {
+      val loginText = loginTextField.getText
 
-      if (!isLoginValid(loginTextField.getText)) {
-        loadMainScene(event)
+      if (isLoginValid(loginText)) {
+        val chatSceneController = new ChatSceneController()
+        chatSceneController.startup(25251, loginText)
+        chatSceneController.loadScene(event)
+
+        // TODO add progress bar
+
       } else {
-       // TODO: add error message
+
+       // TODO add error message
+
       }
     })
   }

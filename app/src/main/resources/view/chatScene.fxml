@@ -13,7 +13,7 @@
 
 <BorderPane fx:id="mainScene" prefHeight="760.0" prefWidth="1000.0" stylesheets="@../style/main.css"
             xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.github.ghilsidoll.irc.controller.MainSceneController">
+            fx:controller="com.github.ghilsidoll.irc.controller.ChatSceneController">
    <left>
       <HBox>
          <VBox prefHeight="754.0" prefWidth="370.0" styleClass="background-color-default" BorderPane.alignment="CENTER">

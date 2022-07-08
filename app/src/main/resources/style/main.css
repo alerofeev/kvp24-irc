@@ -3,7 +3,7 @@
 }
 
 .background-color-gradient {
-    -fx-background-color: linear-gradient(to bottom, #220d56, #161224);
+    -fx-background-color: linear-gradient(to bottom, #220d56, #161224)
 }
 
 .background-color-transparent {
