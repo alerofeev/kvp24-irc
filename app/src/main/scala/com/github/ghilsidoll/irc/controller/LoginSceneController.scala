@@ -39,8 +39,8 @@ class LoginSceneController {
 
       if (isLoginValid(loginText)) {
         val chatSceneController = new ChatSceneController()
-        chatSceneController.startup(25251, loginText)
         chatSceneController.loadScene(event)
+        chatSceneController.startup(25251, loginText)
 
         // TODO add progress bar
 

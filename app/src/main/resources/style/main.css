@@ -2,10 +2,6 @@
     -fx-background-color: #161224
 }
 
-.background-color-gradient {
-    -fx-background-color: linear-gradient(to bottom, #220d56, #161224)
-}
-
 .background-color-transparent {
     -fx-background-color: rgba(0, 0, 0, 0)
 }
@@ -32,6 +28,21 @@
 
 .border-none {
     -fx-border-style: hidden
+}
+
+.chat-text-field {
+    -fx-border-style: hidden;
+    -fx-background-radius: 50px;
+    -fx-background-color: rgba(41, 22, 73, 0.5);
+}
+
+.chat-text-field:focused {
+    -fx-border-style: hidden;
+}
+
+.chat-send-message-button {
+    -fx-border-style: hidden;
+    -fx-background-radius: 50px;
 }
 
 /* Authorization scene styles */
