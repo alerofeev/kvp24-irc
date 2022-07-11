@@ -1,15 +1,16 @@
 package com.github.ghilsidoll.irc.controller
 
 import com.github.ghilsidoll.irc.actor.RootBehavior
-import akka.actor.typed.ActorSystem
-import com.github.ghilsidoll.irc.actor.RootBehavior.{Command, PostMessage}
+import com.github.ghilsidoll.irc.actor.RootBehavior.userActor
+import com.github.ghilsidoll.irc.event.MessagePosted
 import com.typesafe.config.ConfigFactory
+import akka.actor.typed.ActorSystem
 import javafx.application.Platform
 import javafx.event.Event
 import javafx.fxml.{FXML, FXMLLoader}
 import javafx.scene.control.{Button, TextField}
 import javafx.scene.{Node, Parent, Scene}
-import javafx.scene.layout.{BorderPane, VBox}
+import javafx.scene.layout.{BorderPane, HBox, VBox}
 import javafx.stage.{Screen, Stage}
 
 import java.util.Objects
@@ -23,12 +24,13 @@ class ChatSceneController {
   protected var chatPreviewContainer: VBox = _
 
   @FXML
+  protected var chatContainer: HBox = _
+
+  @FXML
   protected var sendMessageButton: Button = _
 
   @FXML
   protected var messageTextField: TextField = _
-
-  private final var system: ActorSystem[Command] = _
 
   def startup(port: Int, systemName: String): Unit = {
     val config = ConfigFactory.parseString(s"""akka.remote.artery.canonical.port=$port
@@ -36,7 +38,7 @@ class ChatSceneController {
       "akka://$systemName@127.0.0.1:25252"]""".stripMargin)
       .withFallback(ConfigFactory.load("application.conf"))
 
-    system = ActorSystem(RootBehavior.behavior, systemName, config)
+    ActorSystem(RootBehavior.behavior, systemName, config)
   }
 
   def loadScene(event: Event): Unit = {
@@ -51,9 +53,22 @@ class ChatSceneController {
     window.setY((screenBounds.getHeight - stage.getHeight) / 2)
   }
 
+  private def displayMessage(message: String): Unit = {
+
+  }
+
   def initialize(): Unit = {
     Platform.runLater(() => mainScene.requestFocus())
     mainScene.setOnMouseClicked(_ => mainScene.requestFocus())
-    
+
+    sendMessageButton.setOnAction(_ => {
+
+      if (messageTextField.getText.nonEmpty) {
+        userActor ! MessagePosted(messageTextField.getText)
+      }
+
+      messageTextField.setText("")
+      mainScene.requestFocus()
+    })
   }
 }
