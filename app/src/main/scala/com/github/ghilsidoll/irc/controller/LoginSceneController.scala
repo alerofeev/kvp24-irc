@@ -1,8 +1,10 @@
 package com.github.ghilsidoll.irc.controller
 
 import javafx.application.Platform
+import javafx.event.{Event, EventHandler}
 import javafx.fxml.FXML
 import javafx.scene.control.{Button, TextField}
+import javafx.scene.input.{KeyCode, KeyEvent}
 import javafx.scene.layout.BorderPane
 
 class LoginSceneController {
@@ -23,32 +25,44 @@ class LoginSceneController {
       error = true
     }
 
-    // TODO add validation by symbols
+    // TODO: add validation by symbols
 
-    // TODO add validation by uniqueness
+    // TODO: add validation by uniqueness
 
     !error
+  }
+
+  def login(event: Event): Unit = {
+    val loginText = loginTextField.getText
+
+    if (isLoginValid(loginText)) {
+      val chatSceneController = new ChatSceneController()
+      chatSceneController.startup(25251, loginText)
+      chatSceneController.loadScene(event)
+
+      // TODO: add progress bar
+
+    } else {
+
+      // TODO: add error message
+
+    }
   }
 
   def initialize(): Unit = {
     Platform.runLater(() => mainScene.requestFocus())
     mainScene.setOnMouseClicked(_ => mainScene.requestFocus())
 
-    loginButton.setOnAction(event => {
-      val loginText = loginTextField.getText
-
-      if (isLoginValid(loginText)) {
-        val chatSceneController = new ChatSceneController()
-        chatSceneController.loadScene(event)
-        chatSceneController.startup(25251, loginText)
-
-        // TODO add progress bar
-
-      } else {
-
-       // TODO add error message
-
+    loginTextField.setOnKeyPressed(new EventHandler[KeyEvent]() {
+      override def handle(event: KeyEvent): Unit = {
+        if (event.getCode == KeyCode.ENTER) {
+          login(event)
+        }
       }
+    })
+
+    loginButton.setOnAction(event => {
+      login(event)
     })
   }
 }

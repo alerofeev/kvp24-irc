@@ -12,8 +12,6 @@ object RootBehavior {
   val behavior: Behavior[NotUsed] = Behaviors.setup { context =>
     userActor = context.spawn(UserActor.user, context.system.name)
 
-
-
     Behaviors.receiveSignal {
       case (_, Terminated(_)) => Behaviors.stopped
     }

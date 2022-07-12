@@ -47,6 +47,12 @@
     -fx-background-color: rgba(60, 117, 178, 0.3)
 }
 
+.scroll-pane:focused {
+    -fx-border-style: hidden;
+    -fx-border-width: 0;
+    -fx-border-insets: 0;
+}
+
 /* Authorization scene styles */
 
 .background-color-default {
@@ -80,7 +86,43 @@
     -fx-background-color: rgba(60, 117, 178, 0.3)
 }
 
-/* !Authorization scene styles */
+/* Scrollbar style */
+
+.scroll-bar:vertical {
+    -fx-background-color: #0e1621;
+    -fx-pref-width: 10px;
+}
+
+.scroll-bar:vertical > .thumb {
+    -fx-background-color: #bbb
+}
+
+.scroll-bar:vertical > .track {
+    -fx-background-color: #0e1621
+}
+
+.scroll-bar:vertical > .track {
+    -fx-background-color: rgba(170, 170, 170, 0.5);
+    -fx-background-radius: 20px;
+}
+
+.scroll-bar:vertical > .increment-button {
+    -fx-background-color: #0e1621;
+    visibility: hidden;
+}
+
+.scroll-bar:vertical > .decrement-button {
+    -fx-background-color: #0e1621;
+    visibility: hidden;
+}
+
+.scroll-bar:vertical > .increment-button > .increment-arrow {
+    -fx-padding: 0
+}
+
+.scroll-bar:vertical > .decrement-button > .decrement-arrow {
+    -fx-padding: 0
+}
 
 /* MessageBox scene styles */
 
@@ -95,5 +137,3 @@
 .sender-other {
     -fx-background-color: #182533;
 }
-
-/* !MessageBox scene styles */

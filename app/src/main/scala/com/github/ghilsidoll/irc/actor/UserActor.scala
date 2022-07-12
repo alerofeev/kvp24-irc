@@ -5,6 +5,7 @@ import akka.actor.typed.scaladsl.Behaviors
 import com.github.ghilsidoll.irc.event.{MessagePosted, SessionEvent}
 
 object UserActor {
+
   val user: Behavior[SessionEvent] =
     Behaviors.receive { (context, message) => {
       message match {
