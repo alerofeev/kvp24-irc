@@ -1,0 +1,139 @@
+.background-color-left-pane {
+    -fx-background-color: #17212b
+}
+
+.background-color-center-pane {
+    -fx-background-color: #0e1621
+}
+
+.background-color-transparent {
+    -fx-background-color: rgba(0, 0, 0, 0)
+}
+
+.border-color-default {
+    -fx-background-color: #0a121b
+}
+
+.background-radius-sm {
+    -fx-background-radius: 20px
+}
+
+.border-none {
+    -fx-border-style: hidden
+}
+
+.chat-text-field {
+    -fx-border-style: hidden;
+    -fx-background-radius: 50px;
+    -fx-text-fill: #ccc;
+}
+
+.chat-text-field:focused {
+    -fx-border-style: hidden
+}
+
+.chat-send-message-button {
+    -fx-border-style: hidden !important;
+    -fx-background-radius: 50px !important;
+    -fx-background-color: rgba(60, 117, 178, 0.5);
+    -fx-text-fill: #ccc;
+}
+
+.chat-send-message-button:hover {
+    -fx-background-color: rgba(60, 117, 178, 0.7)
+}
+
+.chat-send-message-button:pressed {
+    -fx-background-color: rgba(60, 117, 178, 0.3)
+}
+
+.scroll-pane:focused {
+    -fx-border-style: hidden;
+    -fx-border-width: 0;
+    -fx-border-insets: 0;
+}
+
+/* Authorization scene styles */
+
+.background-color-default {
+    -fx-background-color: #2c547c
+}
+
+.login-text-field {
+    -fx-background-color: rgba(60, 117, 178, 0.3), #2c547c;
+    -fx-background-insets: 0, 0 0 3 0;
+    -fx-background-radius: 0;
+    -fx-text-fill: #ccc;
+}
+
+.login-text-field:focused {
+   -fx-background-color: rgba(60, 117, 178, 0.7), #2c547c
+}
+
+.login-button {
+    -fx-border-style: hidden !important;
+    -fx-border-radius: 0 !important;
+    -fx-background-radius: 0 !important;
+    -fx-background-color: rgba(60, 117, 178, 0.5);
+    -fx-text-fill: #ccc;
+}
+
+.login-button:hover {
+    -fx-background-color: rgba(60, 117, 178, 0.7)
+}
+
+.login-button:pressed {
+    -fx-background-color: rgba(60, 117, 178, 0.3)
+}
+
+/* Scrollbar style */
+
+.scroll-bar:vertical {
+    -fx-background-color: #0e1621;
+    -fx-pref-width: 10px;
+}
+
+.scroll-bar:vertical > .thumb {
+    -fx-background-color: #bbb
+}
+
+.scroll-bar:vertical > .track {
+    -fx-background-color: #0e1621
+}
+
+.scroll-bar:vertical > .track {
+    -fx-background-color: rgba(170, 170, 170, 0.5);
+    -fx-background-radius: 20px;
+}
+
+.scroll-bar:vertical > .increment-button {
+    -fx-background-color: #0e1621;
+    visibility: hidden;
+}
+
+.scroll-bar:vertical > .decrement-button {
+    -fx-background-color: #0e1621;
+    visibility: hidden;
+}
+
+.scroll-bar:vertical > .increment-button > .increment-arrow {
+    -fx-padding: 0
+}
+
+.scroll-bar:vertical > .decrement-button > .decrement-arrow {
+    -fx-padding: 0
+}
+
+/* MessageBox scene styles */
+
+.message-box-container {
+    -fx-background-radius: 10px;
+}
+
+.sender-me {
+    -fx-background-color: #2b5278;
+}
+
+.sender-other {
+    -fx-background-color: #182533;
+}
