@@ -42,13 +42,14 @@ class ChatSceneController {
   @FXML
   protected var sendMessageButton: ImageView = _
 
-  def startup(port: Int, systemName: String): Unit = {
+  def startup(port: Int, login: String): Unit = {
     val config = ConfigFactory.parseString(s"""akka.remote.artery.canonical.port=$port
-      akka.cluster.seed-nodes=["akka://$systemName@127.0.0.1:25251",
-      "akka://$systemName@127.0.0.1:25252"]""".stripMargin)
+      akka.cluster.seed-nodes=["akka://chat@127.0.0.1:25251",
+      "akka://chat@127.0.0.1:25252"]""".stripMargin)
       .withFallback(ConfigFactory.load("application.conf"))
 
-    ActorSystem(RootBehavior.behavior, systemName, config)
+    RootBehavior.setUserLogin(login)
+    ActorSystem(RootBehavior.behavior, "chat", config)
   }
 
   def loadScene(event: Event): Unit = {
@@ -74,7 +75,7 @@ class ChatSceneController {
   private def sendMessage(): Unit = {
 
     if (messageTextField.getText.nonEmpty) {
-      userActor ! MessagePosted(messageTextField.getText)
+      RootBehavior.getUserActor ! MessagePosted(messageTextField.getText)
       displayMessage(username, messageTextField.getText)
     }
 
@@ -84,7 +85,7 @@ class ChatSceneController {
   }
 
   def initialize(): Unit = {
-    username = userActor.path.name
+    username = RootBehavior.getUserLogin
 
     Platform.runLater(() => mainScene.requestFocus())
     mainScene.setOnMouseClicked(_ => mainScene.requestFocus())

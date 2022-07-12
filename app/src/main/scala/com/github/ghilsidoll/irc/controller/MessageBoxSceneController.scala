@@ -15,6 +15,4 @@ class MessageBoxSceneController {
     loginLabel.setText(login)
     messageContentLabel.setText(messageContent)
   }
-
-  def initialize(): Unit = {}
 }
