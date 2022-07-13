@@ -64,16 +64,18 @@ class ChatSceneController(private val login: String) {
     window.asInstanceOf[Stage].setScene(new Scene(loader.load(), 1000, 760))
   }
 
-   def displayMessage(login: String, content: String): Unit = {
-    val loader: FXMLLoader = new FXMLLoader(Objects.requireNonNull(getClass.getResource(
-      "/view/template/messageBoxScene.fxml")))
-    val node: VBox = loader.load()
-    loader.getController.asInstanceOf[MessageBoxSceneController].setContent(login, content)
-    chatContainer.getChildren.add(node)
+   def displayMessage(login: String, content: String, isYou: Boolean): Unit = {
+     Platform.runLater(() => {
+       val loader: FXMLLoader = new FXMLLoader(Objects.requireNonNull(getClass.getResource(
+         "/view/template/messageBoxScene.fxml")))
+       val node: VBox = loader.load()
+       loader.getController.asInstanceOf[MessageBoxSceneController].setContent(login, content, isYou)
+       chatContainer.getChildren.add(node)
 
-    chatScrollPane.setVvalue(1d)
-    messageTextField.setText("")
-    messageTextField.requestFocus()
+       chatScrollPane.setVvalue(1d)
+       messageTextField.setText("")
+       messageTextField.requestFocus()
+     })
   }
 
   private def sendMessage(): Unit = {

@@ -14,7 +14,7 @@ object RootBehavior {
 
   def apply(controller: ChatSceneController): Behavior[Command] = {
     Behaviors.setup { context =>
-      val user = context.spawn(UserActor(), controller.getLogin)
+      val user = context.spawn(UserActor(controller), controller.getLogin)
       val topic = context.spawn(Topic[SessionEvent]("test-topic"), "TestTopic")
 
       topic ! Subscribe(user)

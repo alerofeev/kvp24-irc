@@ -16,6 +16,11 @@
                 <Font name="Segoe UI Bold" size="14.0" />
             </font>
         </Label>
+      <Label fx:id="youLabel" text="(Вы)" textFill="#26e459" visible="false">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
     </HBox>
     <Label fx:id="messageContentLabel" prefWidth="618.0" textFill="#eeeeee" wrapText="true">
         <VBox.margin>

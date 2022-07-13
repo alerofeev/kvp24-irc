@@ -11,8 +11,15 @@ class MessageBoxSceneController {
   @FXML
   protected var messageContentLabel: Label = _
 
-  def setContent(login: String, messageContent: String): Unit = {
+  @FXML
+  protected var youLabel: Label = _
+
+  def setContent(login: String, messageContent: String, isYou: Boolean): Unit = {
     loginLabel.setText(login)
     messageContentLabel.setText(messageContent)
+
+    if (isYou) {
+      youLabel.setVisible(true)
+    }
   }
 }
