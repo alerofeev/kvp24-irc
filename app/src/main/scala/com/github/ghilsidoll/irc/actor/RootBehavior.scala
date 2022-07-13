@@ -10,7 +10,7 @@ import com.github.ghilsidoll.irc.event.{MessagePosted, SessionEvent}
 object RootBehavior {
 
   sealed trait Command
-  final case class PostMessage(message: String) extends Command
+  final case class PostMessage(message: String, to: String) extends Command
 
   def apply(controller: ChatSceneController): Behavior[Command] = {
     Behaviors.setup { context =>
@@ -20,8 +20,8 @@ object RootBehavior {
       topic ! Subscribe(user)
 
       Behaviors.receiveMessage {
-        case PostMessage(message) =>
-          topic ! Publish(MessagePosted(message, user.path.name))
+        case PostMessage(message, to) =>
+          topic ! Publish(MessagePosted(message, user.path.name, to))
           Behaviors.same
       }
     }

@@ -32,21 +32,6 @@
     -fx-border-style: hidden
 }
 
-.chat-send-message-button {
-    -fx-border-style: hidden !important;
-    -fx-background-radius: 50px !important;
-    -fx-background-color: rgba(60, 117, 178, 0.5);
-    -fx-text-fill: #ccc;
-}
-
-.chat-send-message-button:hover {
-    -fx-background-color: rgba(60, 117, 178, 0.7)
-}
-
-.chat-send-message-button:pressed {
-    -fx-background-color: rgba(60, 117, 178, 0.3)
-}
-
 .scroll-pane:focused {
     -fx-border-style: hidden;
     -fx-border-width: 0;
@@ -130,10 +115,16 @@
     -fx-background-radius: 10px;
 }
 
-.sender-me {
-    -fx-background-color: #2b5278;
+/* DialogBox scene styles */
+
+.dialog-box {
+    -fx-background-color: #17212b
 }
 
-.sender-other {
-    -fx-background-color: #182533;
+.dialog-box:hover {
+    -fx-background-color: rgba(204, 204, 204, 0.2)
+}
+
+.dialog-box:focused {
+    -fx-background-color: #2b5278
 }

@@ -14,6 +14,7 @@ import javafx.scene.layout.{BorderPane, VBox}
 import javafx.stage.{Screen, Stage}
 import javafx.scene.input.{KeyCode, KeyEvent}
 
+import java.nio.file.WatchEvent.Modifier
 import java.util.Objects
 
 class ChatSceneController(private val login: String) {
@@ -37,6 +38,9 @@ class ChatSceneController(private val login: String) {
   protected var messageTextField: TextField = _
 
   @FXML
+  protected var recipientTextField: TextField = _
+
+  @FXML
   protected var sendMessageButton: ImageView = _
 
   private final var actorSystem: ActorSystem[RootBehavior.Command] = _
@@ -48,7 +52,7 @@ class ChatSceneController(private val login: String) {
   def startup(port: Int, controller: ChatSceneController): Unit = {
     val config = ConfigFactory.parseString(s"""akka.remote.artery.canonical.port=$port
       akka.cluster.seed-nodes=["akka://chat@127.0.0.1:25251",
-      "akka://chat@127.0.0.1:25252"]""".stripMargin)
+      "akka://chat@127.0.0.1:25252"]""")
       .withFallback(ConfigFactory.load("application.conf"))
 
     actorSystem = ActorSystem(RootBehavior(controller), "chat", config)
@@ -64,12 +68,12 @@ class ChatSceneController(private val login: String) {
     window.asInstanceOf[Stage].setScene(new Scene(loader.load(), 1000, 760))
   }
 
-   def displayMessage(login: String, content: String, isYou: Boolean): Unit = {
+   def displayMessage(login: String, content: String, modifier: Int = -1): Unit = {
      Platform.runLater(() => {
        val loader: FXMLLoader = new FXMLLoader(Objects.requireNonNull(getClass.getResource(
          "/view/template/messageBoxScene.fxml")))
        val node: VBox = loader.load()
-       loader.getController.asInstanceOf[MessageBoxSceneController].setContent(login, content, isYou)
+       loader.getController.asInstanceOf[MessageBoxSceneController].setContent(login, content, modifier)
        chatContainer.getChildren.add(node)
 
        chatScrollPane.setVvalue(1d)
@@ -81,7 +85,8 @@ class ChatSceneController(private val login: String) {
   private def sendMessage(): Unit = {
 
     if (messageTextField.getText.nonEmpty) {
-      actorSystem ! PostMessage(messageTextField.getText)
+      val recipient: String = recipientTextField.getText
+      actorSystem ! PostMessage(messageTextField.getText, if (recipient == null) "" else recipientTextField.getText)
     }
 
     // TODO: add validation for message
