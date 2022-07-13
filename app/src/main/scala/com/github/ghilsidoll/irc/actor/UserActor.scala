@@ -17,7 +17,7 @@ object UserActor {
           controller.displayMessage(from, message, 0)
         } else if (to == selfName) {
           controller.displayMessage(from, message, 1)
-        } else if (to.isBlank) {
+        } else if (to == "") {
           controller.displayMessage(from, message)
         }
 

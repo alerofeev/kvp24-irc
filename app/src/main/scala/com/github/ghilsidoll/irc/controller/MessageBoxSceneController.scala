@@ -23,10 +23,10 @@ class MessageBoxSceneController {
       case -1 =>
       case 0 =>
         modifierLabel.setText("[Вы]")
-        modifierLabel.setTextFill(new Color(38, 228, 89, 100))
+        modifierLabel.setTextFill(Color.rgb(38, 228, 89))
       case 1 =>
         modifierLabel.setText("[Вам]")
-        modifierLabel.setTextFill(new Color(255, 65, 75, 100))
+        modifierLabel.setTextFill(Color.rgb(255, 65, 75))
     }
   }
 }

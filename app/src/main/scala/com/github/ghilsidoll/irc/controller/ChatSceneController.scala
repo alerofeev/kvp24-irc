@@ -86,7 +86,7 @@ class ChatSceneController(private val login: String) {
 
     if (messageTextField.getText.nonEmpty) {
       val recipient: String = recipientTextField.getText
-      actorSystem ! PostMessage(messageTextField.getText, if (recipient == null) "" else recipientTextField.getText)
+      actorSystem ! PostMessage(messageTextField.getText, if (recipient == null) "" else recipient)
     }
 
     // TODO: add validation for message
