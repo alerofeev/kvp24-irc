@@ -1,25 +1,22 @@
 package com.github.ghilsidoll.irc.controller
 
+import akka.actor.typed.ActorSystem
 import com.github.ghilsidoll.irc.actor.RootBehavior
-import com.github.ghilsidoll.irc.actor.RootBehavior.userActor
-import com.github.ghilsidoll.irc.event.MessagePosted
+import com.github.ghilsidoll.irc.actor.RootBehavior.PostMessage
 import com.typesafe.config.ConfigFactory
 import javafx.application.Platform
 import javafx.event.{Event, EventHandler}
 import javafx.fxml.{FXML, FXMLLoader}
 import javafx.scene.control.{Label, ScrollPane, TextField}
 import javafx.scene.image.ImageView
-import javafx.scene.{Node, Parent, Scene}
+import javafx.scene.{Node, Scene}
 import javafx.scene.layout.{BorderPane, VBox}
 import javafx.stage.{Screen, Stage}
-import akka.actor.typed.ActorSystem
 import javafx.scene.input.{KeyCode, KeyEvent}
 
 import java.util.Objects
 
-class ChatSceneController {
-
-  private var username: String = _
+class ChatSceneController(private val login: String) {
 
   @FXML
   protected var chatContainer: VBox = _
@@ -42,51 +39,54 @@ class ChatSceneController {
   @FXML
   protected var sendMessageButton: ImageView = _
 
-  def startup(port: Int, login: String): Unit = {
+  private final var actorSystem: ActorSystem[RootBehavior.Command] = _
+
+  def getLogin: String = {
+    login
+  }
+
+  def startup(port: Int, controller: ChatSceneController): Unit = {
     val config = ConfigFactory.parseString(s"""akka.remote.artery.canonical.port=$port
       akka.cluster.seed-nodes=["akka://chat@127.0.0.1:25251",
       "akka://chat@127.0.0.1:25252"]""".stripMargin)
       .withFallback(ConfigFactory.load("application.conf"))
 
-    RootBehavior.setUserLogin(login)
-    ActorSystem(RootBehavior.behavior, "chat", config)
+    actorSystem = ActorSystem(RootBehavior(controller), "chat", config)
   }
 
-  def loadScene(event: Event): Unit = {
+  def loadScene(event: Event, loader: FXMLLoader): Unit = {
     val screenBounds = Screen.getPrimary.getVisualBounds
     val window = event.getSource.asInstanceOf[Node].getScene.getWindow
-    val stage = window.asInstanceOf[Stage]
-    val root: Parent = FXMLLoader.load(Objects.requireNonNull(getClass.getResource("/view/chatScene.fxml")))
 
     window.setX((screenBounds.getWidth - 1000) / 2)
     window.setY((screenBounds.getHeight - 760) / 2)
 
-    stage.setScene(new Scene(root, 1000, 760))
+    window.asInstanceOf[Stage].setScene(new Scene(loader.load(), 1000, 760))
   }
 
-  private def displayMessage(login: String, content: String): Unit = {
-    val loader:FXMLLoader = new FXMLLoader(Objects.requireNonNull(getClass.getResource(
+   def displayMessage(login: String, content: String): Unit = {
+    val loader: FXMLLoader = new FXMLLoader(Objects.requireNonNull(getClass.getResource(
       "/view/template/messageBoxScene.fxml")))
     val node: VBox = loader.load()
     loader.getController.asInstanceOf[MessageBoxSceneController].setContent(login, content)
     chatContainer.getChildren.add(node)
-  }
-
-  private def sendMessage(): Unit = {
-
-    if (messageTextField.getText.nonEmpty) {
-      RootBehavior.getUserActor ! MessagePosted(messageTextField.getText)
-      displayMessage(username, messageTextField.getText)
-    }
 
     chatScrollPane.setVvalue(1d)
     messageTextField.setText("")
     messageTextField.requestFocus()
   }
 
-  def initialize(): Unit = {
-    username = RootBehavior.getUserLogin
+  private def sendMessage(): Unit = {
 
+    if (messageTextField.getText.nonEmpty) {
+      actorSystem ! PostMessage(messageTextField.getText)
+    }
+
+    // TODO: add validation for message
+
+  }
+
+  def initialize(): Unit = {
     Platform.runLater(() => mainScene.requestFocus())
     mainScene.setOnMouseClicked(_ => mainScene.requestFocus())
 
@@ -98,7 +98,7 @@ class ChatSceneController {
       }
     })
 
-    loginLabel.setText(username)
+    loginLabel.setText(login)
 
     sendMessageButton.setOnMouseClicked(_ => {
       sendMessage()

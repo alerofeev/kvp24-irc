@@ -1,33 +1,29 @@
 package com.github.ghilsidoll.irc.actor
 
-import akka.NotUsed
-import akka.actor.typed.{ActorRef, Behavior, Terminated}
+import akka.actor.typed.Behavior
+import akka.actor.typed.pubsub.Topic
+import akka.actor.typed.pubsub.Topic.{Publish, Subscribe}
 import akka.actor.typed.scaladsl.Behaviors
-import com.github.ghilsidoll.irc.event.SessionEvent
+import com.github.ghilsidoll.irc.controller.ChatSceneController
+import com.github.ghilsidoll.irc.event.{MessagePosted, SessionEvent}
 
 object RootBehavior {
 
-  private final var userActor: ActorRef[SessionEvent] = _
+  sealed trait Command
+  final case class PostMessage(message: String) extends Command
 
-  private final var userLogin: String = _
+  def apply(controller: ChatSceneController): Behavior[Command] = {
+    Behaviors.setup { context =>
+      val user = context.spawn(UserActor(), controller.getLogin)
+      val topic = context.spawn(Topic[SessionEvent]("test-topic"), "TestTopic")
 
-  def setUserLogin(login: String): Unit = {
-    userLogin = login
-  }
+      topic ! Subscribe(user)
 
-  def getUserLogin: String = {
-    userLogin
-  }
-
-  def getUserActor: ActorRef[SessionEvent] = {
-    userActor
-  }
-
-  val behavior: Behavior[NotUsed] = Behaviors.setup { context =>
-    userActor = context.spawn(UserActor.user, userLogin)
-
-    Behaviors.receiveSignal {
-      case (_, Terminated(_)) => Behaviors.stopped
+      Behaviors.receiveMessage {
+        case PostMessage(message) =>
+          topic ! Publish(MessagePosted(message, user.path.name))
+          Behaviors.same
+      }
     }
   }
 }

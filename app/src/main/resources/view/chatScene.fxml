@@ -13,7 +13,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainScene" prefHeight="760.0" prefWidth="1000.0" stylesheets="@../style/main.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.ghilsidoll.irc.controller.ChatSceneController">
+<BorderPane fx:id="mainScene" prefHeight="760.0" prefWidth="1000.0" stylesheets="@../style/main.css"
+            xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <left>
       <HBox styleClass="background-color-left-pane">
          <VBox prefHeight="754.0" prefWidth="370.0" styleClass="background-color-left-pane" BorderPane.alignment="CENTER">

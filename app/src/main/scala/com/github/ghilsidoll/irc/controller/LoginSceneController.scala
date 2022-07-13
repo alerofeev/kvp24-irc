@@ -2,10 +2,12 @@ package com.github.ghilsidoll.irc.controller
 
 import javafx.application.Platform
 import javafx.event.{Event, EventHandler}
-import javafx.fxml.FXML
+import javafx.fxml.{FXML, FXMLLoader}
 import javafx.scene.control.{Button, TextField}
 import javafx.scene.input.{KeyCode, KeyEvent}
 import javafx.scene.layout.BorderPane
+
+import java.util.Objects
 
 class LoginSceneController {
 
@@ -33,12 +35,19 @@ class LoginSceneController {
   }
 
   def login(event: Event): Unit = {
-    val loginText = loginTextField.getText
+    val login = loginTextField.getText
 
-    if (isLoginValid(loginText)) {
-      val chatSceneController = new ChatSceneController()
-      chatSceneController.startup(25252, loginText)
-      chatSceneController.loadScene(event)
+    if (isLoginValid(login)) {
+      val chatSceneController = new ChatSceneController(login)
+
+      chatSceneController.startup(0, chatSceneController)
+
+      val loader: FXMLLoader = new FXMLLoader(Objects.requireNonNull(
+        getClass.getResource("/view/chatScene.fxml")))
+
+      loader.setController(chatSceneController)
+
+      chatSceneController.loadScene(event, loader)
 
       // TODO: add progress bar
 

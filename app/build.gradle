@@ -55,6 +55,9 @@ dependencies {
 
     implementation "com.typesafe.akka:akka-actor-typed_2.13"
 
+    // https://mvnrepository.com/artifact/com.typesafe.akka/akka-remote
+    implementation group: 'com.typesafe.akka', name: 'akka-remote_2.13', version: '2.6.19'
+
     // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
     implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.11'
 
