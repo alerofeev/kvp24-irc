@@ -15,61 +15,11 @@
 <?import javafx.scene.text.Font?>
 
 <?import javafx.collections.FXCollections?>
-<?import javafx.scene.layout.StackPane?>
-<BorderPane fx:id="mainScene" prefHeight="760.0" prefWidth="1000.0" stylesheets="@../style/main.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
-   <left>
-      <HBox styleClass="background-color-left-pane">
-         <VBox prefHeight="754.0" prefWidth="370.0" styleClass="background-color-left-pane" BorderPane.alignment="CENTER">
-            <HBox alignment="CENTER" prefHeight="26.0" prefWidth="340.0">
-               <Label contentDisplay="BOTTOM" prefHeight="46.0" text="Чаты" textAlignment="CENTER" textFill="#cccccc">
-                  <font>
-                     <Font name="Roboto Light" size="18.0" />
-                  </font>
-                  <HBox.margin>
-                     <Insets left="20.0" right="10.0" />
-                  </HBox.margin>
-               </Label>
-               <HBox alignment="CENTER" prefHeight="26.0" prefWidth="211.0">
-                  <TextField prefHeight="25.0" prefWidth="177.0" styleClass="background-color-transparent" />
-                  <ImageView fitHeight="20.0" fitWidth="20.0" opacity="0.26" pickOnBounds="true" preserveRatio="true">
-                     <Image url="@../image/search.png" />
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                  </ImageView>
-                  <HBox.margin>
-                     <Insets />
-                  </HBox.margin>
-                  <padding>
-                     <Insets left="5.0" right="10.0" />
-                  </padding>
-               </HBox>
-               <ImageView fitHeight="14.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
-                  <HBox.margin>
-                     <Insets left="30.0" right="20.0" />
-                  </HBox.margin>
-                  <Image url="@../image/plus.png" />
-               </ImageView>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-               <padding>
-                  <Insets bottom="40.0" top="20.0" />
-               </padding>
-            </HBox>
-            <VBox fx:id="chatPreviewContainer" prefHeight="650.0" prefWidth="370.0">
-               <VBox.margin>
-                  <Insets bottom="20.0" />
-               </VBox.margin>
-            </VBox>
-         </VBox>
-         <Pane prefHeight="200.0" prefWidth="1.0" styleClass="border-color-default" stylesheets="@../style/main.css" />
-      </HBox>
-   </left>
+<BorderPane fx:id="mainScene" prefHeight="660.0" prefWidth="628.0" stylesheets="@../style/main.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <VBox prefHeight="46.0" prefWidth="1000.0" styleClass="background-color-left-pane" BorderPane.alignment="CENTER">
          <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="1000.0">
-            <Label fx:id="loginLabel" text="Login" textFill="#cccccc">
+            <Label fx:id="loginLabel" textFill="#cccccc">
                <HBox.margin>
                   <Insets left="20.0" />
                </HBox.margin>
@@ -84,7 +34,7 @@
    <center>
       <VBox alignment="BOTTOM_CENTER" prefHeight="20.0" prefWidth="100.0" styleClass="background-color-center-pane" BorderPane.alignment="CENTER">
          <ScrollPane fx:id="chatScrollPane" hbarPolicy="NEVER" prefHeight="668.0" prefWidth="629.0" styleClass="background-color-center-pane">
-            <VBox fx:id="chatContainer" alignment="BOTTOM_CENTER" minHeight="666.0" minWidth="0.0" prefWidth="627.0" styleClass="background-color-center-pane" />
+            <VBox fx:id="chatContainer" alignment="BOTTOM_CENTER" minHeight="567.0" minWidth="0.0" prefWidth="627.0" styleClass="background-color-center-pane" />
          </ScrollPane>
          <Pane prefHeight="1.0" prefWidth="628.0" styleClass="border-color-default" stylesheets="@../style/main.css" />
          <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="629.0" spacing="20.0" styleClass="background-color-left-pane">
@@ -104,6 +54,7 @@
                   </FXCollections>
                </items>
             </ChoiceBox>
+            
             <ImageView fx:id="sendMessageButton" fitHeight="24.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                <Image url="@../image/send.png" />
             </ImageView>
