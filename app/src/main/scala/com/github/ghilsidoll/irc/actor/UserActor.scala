@@ -25,8 +25,9 @@ object UserActor {
         if (login != selfName) {
           context.log.info(s"[____USER____] Login received: $login")
           controller.addRecipient(login)
+        } else {
+          context.log.info(s"[____USER____] Login posted by $login")
         }
-        println("login posted")
         Behaviors.same
     }
   }

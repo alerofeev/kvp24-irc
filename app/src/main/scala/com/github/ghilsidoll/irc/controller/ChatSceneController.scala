@@ -3,7 +3,7 @@ package com.github.ghilsidoll.irc.controller
 import akka.actor.typed.ActorSystem
 
 import com.github.ghilsidoll.irc.actor.RootBehavior
-import com.github.ghilsidoll.irc.actor.RootBehavior.{PostLogin, PostMessage}
+import com.github.ghilsidoll.irc.actor.RootBehavior.PostMessage
 import com.typesafe.config.ConfigFactory
 
 import javafx.application.Platform
@@ -103,7 +103,6 @@ class ChatSceneController(private val login: String) {
       val recipient: String = recipientChoiceBox.getValue
       actorSystem ! PostMessage(messageTextField.getText,
         if (recipient == null || recipient == "Group") "" else recipient)
-      actorSystem ! PostLogin()
     }
 
     // TODO: add validation for message
