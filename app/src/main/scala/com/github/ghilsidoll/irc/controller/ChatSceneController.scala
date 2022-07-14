@@ -2,12 +2,12 @@ package com.github.ghilsidoll.irc.controller
 
 import akka.actor.typed.ActorSystem
 import com.github.ghilsidoll.irc.actor.RootBehavior
-import com.github.ghilsidoll.irc.actor.RootBehavior.PostMessage
+import com.github.ghilsidoll.irc.actor.RootBehavior.{PostLogin, PostMessage}
 import com.typesafe.config.ConfigFactory
 import javafx.application.Platform
 import javafx.event.{Event, EventHandler}
 import javafx.fxml.{FXML, FXMLLoader}
-import javafx.scene.control.{Label, ScrollPane, TextField}
+import javafx.scene.control.{ChoiceBox, Label, ScrollPane, TextField}
 import javafx.scene.image.ImageView
 import javafx.scene.{Node, Scene}
 import javafx.scene.layout.{BorderPane, VBox}
@@ -37,7 +37,7 @@ class ChatSceneController(private val login: String) {
   protected var messageTextField: TextField = _
 
   @FXML
-  protected var recipientTextField: TextField = _
+  protected var recipientChoiceBox: ChoiceBox[String] = _
 
   @FXML
   protected var sendMessageButton: ImageView = _
@@ -46,6 +46,10 @@ class ChatSceneController(private val login: String) {
 
   def getLogin: String = {
     login
+  }
+
+  def addRecipient(recipientLogin: String): Unit = {
+    recipientChoiceBox.getItems.add(recipientLogin)
   }
 
   def startup(port: Int, controller: ChatSceneController): Unit = {
@@ -84,8 +88,10 @@ class ChatSceneController(private val login: String) {
   private def sendMessage(): Unit = {
 
     if (messageTextField.getText.nonEmpty) {
-      val recipient: String = recipientTextField.getText
-      actorSystem ! PostMessage(messageTextField.getText, if (recipient == null) "" else recipient)
+      val recipient: String = recipientChoiceBox.getValue
+      actorSystem ! PostMessage(messageTextField.getText,
+        if (recipient == null || recipient == "Group") "" else recipient)
+      actorSystem ! PostLogin()
     }
 
     // TODO: add validation for message
@@ -94,6 +100,7 @@ class ChatSceneController(private val login: String) {
 
   def initialize(): Unit = {
     Platform.runLater(() => mainScene.requestFocus())
+
     mainScene.setOnMouseClicked(_ => mainScene.requestFocus())
 
     messageTextField.setOnKeyPressed(new EventHandler[KeyEvent]() {
@@ -105,6 +112,8 @@ class ChatSceneController(private val login: String) {
     })
 
     loginLabel.setText(login)
+
+    recipientChoiceBox.setValue("Group")
 
     sendMessageButton.setOnMouseClicked(_ => {
       sendMessage()

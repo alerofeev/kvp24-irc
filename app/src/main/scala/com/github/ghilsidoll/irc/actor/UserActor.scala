@@ -3,7 +3,7 @@ package com.github.ghilsidoll.irc.actor
 import akka.actor.typed.Behavior
 import akka.actor.typed.scaladsl.Behaviors
 import com.github.ghilsidoll.irc.controller.ChatSceneController
-import com.github.ghilsidoll.irc.event.{MessagePosted, SessionEvent}
+import com.github.ghilsidoll.irc.event.{LoginPosted, MessagePosted, SessionEvent}
 
 object UserActor {
   def apply(controller: ChatSceneController): Behavior[SessionEvent] =
@@ -20,8 +20,13 @@ object UserActor {
         } else if (to == "") {
           controller.displayMessage(from, message)
         }
-
-        // controller.displayMessage(from, message, modifier)
+        Behaviors.same
+      case LoginPosted(login) =>
+        if (login != selfName) {
+          context.log.info(s"[____USER____] Login received: $login")
+          controller.addRecipient(login)
+        }
+        println("login posted")
         Behaviors.same
     }
   }
