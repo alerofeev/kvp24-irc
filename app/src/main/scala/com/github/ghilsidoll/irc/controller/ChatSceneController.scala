@@ -14,7 +14,6 @@ import javafx.scene.layout.{BorderPane, VBox}
 import javafx.stage.{Screen, Stage}
 import javafx.scene.input.{KeyCode, KeyEvent}
 
-import java.nio.file.WatchEvent.Modifier
 import java.util.Objects
 
 class ChatSceneController(private val login: String) {
