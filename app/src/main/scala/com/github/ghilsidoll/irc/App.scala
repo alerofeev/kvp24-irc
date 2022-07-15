@@ -20,7 +20,7 @@ class App extends Application {
     val root: Parent = FXMLLoader.load(Objects.requireNonNull(getClass.getResource("/view/loginScene.fxml")))
     primaryStage.setScene(new Scene(root))
     primaryStage.setTitle("kv24-irc")
-   // primaryStage.setResizable(false)
+    primaryStage.setResizable(false)
     primaryStage.show()
   }
 }

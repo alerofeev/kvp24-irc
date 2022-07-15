@@ -9,24 +9,25 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
-            maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0"
-            prefWidth="400.0" styleClass="background-color-default" fx:id="mainScene"
-            stylesheets="@../style/main.css" fx:controller="com.github.ghilsidoll.irc.controller.LoginSceneController">
+<BorderPane fx:id="mainScene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="264.0" prefWidth="400.0" styleClass="background-color-default" stylesheets="@../style/main.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.ghilsidoll.irc.controller.LoginSceneController">
    <center>
       <VBox alignment="CENTER" spacing="20.0" BorderPane.alignment="CENTER">
          <padding>
-            <Insets left="30.0" right="30.0"/>
+            <Insets left="30.0" right="30.0" />
          </padding>
          <TextField fx:id="loginTextField" prefHeight="45.0" prefWidth="220.0" promptText="Логин" styleClass="login-text-field">
             <font>
-               <Font name="Ubuntu" size="16.0"/>
+               <Font name="Ubuntu" size="16.0" />
             </font>
          </TextField>
-         <Button fx:id="loginButton" mnemonicParsing="false" prefHeight="41.0" prefWidth="86.0"
-                 styleClass="login-button" text="Войти">
+         <TextField fx:id="portTextField" prefHeight="45.0" prefWidth="220.0" promptText="Порт" styleClass="login-text-field">
             <font>
-               <Font name="Ubuntu Bold" size="15.0"/>
+               <Font name="Ubuntu" size="16.0" />
+            </font>
+         </TextField>
+         <Button fx:id="loginButton" mnemonicParsing="false" prefHeight="41.0" prefWidth="86.0" styleClass="login-button" text="Войти">
+            <font>
+               <Font name="Ubuntu Bold" size="15.0" />
             </font>
          </Button>
       </VBox>
@@ -35,7 +36,7 @@
       <Pane prefHeight="60.0" prefWidth="400.0" BorderPane.alignment="CENTER">
          <Label layoutX="14.0" layoutY="20.0" text="Авторизация" textFill="#cccccc">
             <font>
-               <Font name="Ubuntu" size="20.0"/>
+               <Font name="Ubuntu" size="20.0" />
             </font>
          </Label>
       </Pane>

@@ -1,6 +1,7 @@
 package com.github.ghilsidoll.irc.controller
 
 import javafx.application.Platform
+import javafx.beans.value.{ChangeListener, ObservableValue}
 import javafx.event.{Event, EventHandler}
 import javafx.fxml.{FXML, FXMLLoader}
 import javafx.scene.control.{Button, TextField}
@@ -16,6 +17,9 @@ class LoginSceneController {
 
   @FXML
   protected var loginTextField: TextField = _
+
+  @FXML
+  protected var portTextField: TextField = _
 
   @FXML
   protected var loginButton: Button = _
@@ -40,7 +44,7 @@ class LoginSceneController {
     if (isLoginValid(login)) {
       val chatSceneController = new ChatSceneController(login)
 
-      chatSceneController.startup(0, chatSceneController)
+      chatSceneController.startup(portTextField.getText.toInt, chatSceneController)
 
       val loader: FXMLLoader = new FXMLLoader(Objects.requireNonNull(
         getClass.getResource("/view/chatScene.fxml")))
@@ -66,6 +70,17 @@ class LoginSceneController {
       override def handle(event: KeyEvent): Unit = {
         if (event.getCode == KeyCode.ENTER) {
           login(event)
+        }
+      }
+    })
+
+    portTextField.textProperty().addListener(new ChangeListener[String]()  {
+      override def changed(observable: ObservableValue[_ <: String], oldValue: String, newValue: String): Unit = {
+        if (!newValue.matches("\\d*")) {
+          portTextField.setText(newValue.replaceAll("\\D", ""))
+        }
+        if (newValue.length > 5) {
+          portTextField.setText(newValue.substring(0, 5))
         }
       }
     })
