@@ -1,19 +1,17 @@
 package com.github.ghilsidoll.irc.controller
 
 import akka.actor.typed.ActorSystem
-
 import com.github.ghilsidoll.irc.actor.RootBehavior
 import com.github.ghilsidoll.irc.actor.RootBehavior.PostMessage
 import com.typesafe.config.ConfigFactory
-
 import javafx.application.Platform
 import javafx.event.{Event, EventHandler}
 import javafx.fxml.{FXML, FXMLLoader}
-import javafx.scene.control.{ChoiceBox, Label, ScrollPane, TextField}
+import javafx.scene.control.{Label, ScrollPane, TextField}
 import javafx.scene.image.ImageView
 import javafx.scene.{Node, Scene}
 import javafx.scene.layout.{BorderPane, VBox}
-import javafx.stage.{Screen, Stage}
+import javafx.stage.{Screen, Stage, WindowEvent}
 import javafx.scene.input.{KeyCode, KeyEvent}
 
 import java.util.Objects
@@ -39,31 +37,15 @@ class ChatSceneController(private val login: String) {
   protected var messageTextField: TextField = _
 
   @FXML
-  protected var recipientChoiceBox: ChoiceBox[String] = _
+  protected var recipientTextField: TextField = _
 
   @FXML
   protected var sendMessageButton: ImageView = _
 
   private final var actorSystem: ActorSystem[RootBehavior.Command] = _
 
-  private var recipientSet: Set[String] = Set("Group")
-
   def getLogin: String = {
     login
-  }
-
-  def addRecipient(recipientLogin: String): Unit = {
-    recipientSet += recipientLogin
-
-    val lastValue: String = recipientChoiceBox.getValue
-
-    Platform.runLater(() => {
-      recipientChoiceBox.getItems.clear()
-      recipientSet.foreach(value => {
-        recipientChoiceBox.getItems.add(value)
-      })
-      recipientChoiceBox.setValue(lastValue)
-    })
   }
 
   def startup(port: Int, controller: ChatSceneController): Unit = {
@@ -76,11 +58,18 @@ class ChatSceneController(private val login: String) {
   def loadScene(event: Event, loader: FXMLLoader): Unit = {
     val screenBounds = Screen.getPrimary.getVisualBounds
     val window = event.getSource.asInstanceOf[Node].getScene.getWindow
+    val stage = window.asInstanceOf[Stage]
 
     window.setX((screenBounds.getWidth - 628) / 2)
     window.setY((screenBounds.getHeight - 660) / 2)
 
-    window.asInstanceOf[Stage].setScene(new Scene(loader.load(), 628, 660))
+    stage.setScene(new Scene(loader.load(), 628, 660))
+
+    stage.setOnCloseRequest((_: WindowEvent) => {
+      actorSystem.terminate()
+      Platform.exit()
+      System.exit(0)
+    })
   }
 
    def displayMessage(login: String, content: String, modifier: Int = -1): Unit = {
@@ -100,9 +89,9 @@ class ChatSceneController(private val login: String) {
   private def sendMessage(): Unit = {
 
     if (messageTextField.getText.nonEmpty) {
-      val recipient: String = recipientChoiceBox.getValue
+      val recipient: String = recipientTextField.getText
       actorSystem ! PostMessage(messageTextField.getText,
-        if (recipient == null || recipient == "Group") "" else recipient)
+        if (recipient == null || recipient.isBlank) "" else recipient)
     }
 
     // TODO: add validation for message
@@ -123,8 +112,6 @@ class ChatSceneController(private val login: String) {
     })
 
     loginLabel.setText(login)
-
-    recipientChoiceBox.setValue("Group")
 
     sendMessageButton.setOnMouseClicked(_ => {
       sendMessage()

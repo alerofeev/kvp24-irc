@@ -38,13 +38,24 @@ class LoginSceneController {
     !error
   }
 
+  def isPortValid(port: String): Boolean = {
+    var error = false
+
+    if (port.isBlank) {
+      error = true
+    }
+
+    !error
+  }
+
   def login(event: Event): Unit = {
     val login = loginTextField.getText
+    val port = portTextField.getText
 
-    if (isLoginValid(login)) {
+    if (isLoginValid(login) && isPortValid(port)) {
       val chatSceneController = new ChatSceneController(login)
 
-      chatSceneController.startup(portTextField.getText.toInt, chatSceneController)
+      chatSceneController.startup(port.toInt, chatSceneController)
 
       val loader: FXMLLoader = new FXMLLoader(Objects.requireNonNull(
         getClass.getResource("/view/chatScene.fxml")))
