@@ -99,6 +99,17 @@ class LoginSceneController {
       }
     })
 
+    loginTextField.textProperty().addListener(new ChangeListener[String]()  {
+      override def changed(observable: ObservableValue[_ <: String], oldValue: String, newValue: String): Unit = {
+        if (!newValue.matches("[\\\\da-zA-Z]")) {
+          loginTextField.setText(newValue.replaceAll("[^\\a-zA-Z]", ""))
+        }
+        if (newValue.length > 16) {
+          loginTextField.setText(newValue.substring(0, 16))
+        }
+      }
+    })
+
     portTextField.textProperty().addListener(new ChangeListener[String]()  {
       override def changed(observable: ObservableValue[_ <: String], oldValue: String, newValue: String): Unit = {
         if (!newValue.matches("\\d*")) {
