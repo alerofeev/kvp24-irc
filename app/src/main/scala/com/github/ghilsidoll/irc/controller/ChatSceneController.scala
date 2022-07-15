@@ -44,10 +44,19 @@ class ChatSceneController(private val login: String) {
 
   private final var actorSystem: ActorSystem[RootBehavior.Command] = _
 
+  /**
+   * Возвращает логин
+   * @return
+   */
   def getLogin: String = {
     login
   }
 
+  /**
+   * Запускает акторную систему
+   * @param port _
+   * @param controller контроллер ChatScene
+   */
   def startup(port: Int, controller: ChatSceneController): Unit = {
     val config = ConfigFactory.parseString(s"""akka.remote.artery.canonical.port=$port""")
       .withFallback(ConfigFactory.load("application.conf"))
@@ -55,6 +64,11 @@ class ChatSceneController(private val login: String) {
     actorSystem = ActorSystem(RootBehavior(controller), "chat", config)
   }
 
+  /**
+   * Загружает сцену ChatScene
+   * @param event _
+   * @param loader _
+   */
   def loadScene(event: Event, loader: FXMLLoader): Unit = {
     val screenBounds = Screen.getPrimary.getVisualBounds
     val window = event.getSource.asInstanceOf[Node].getScene.getWindow
@@ -72,6 +86,12 @@ class ChatSceneController(private val login: String) {
     })
   }
 
+  /**
+   *
+   * @param login _
+   * @param content содержимое сообщения
+   * @param modifier модификатор доступа
+   */
    def displayMessage(login: String, content: String, modifier: Int = -1): Unit = {
      Platform.runLater(() => {
        val loader: FXMLLoader = new FXMLLoader(Objects.requireNonNull(getClass.getResource(
@@ -86,6 +106,9 @@ class ChatSceneController(private val login: String) {
      })
   }
 
+  /**
+   * Отправляет сообщение в акторную систему
+   */
   private def sendMessage(): Unit = {
 
     if (messageTextField.getText.nonEmpty) {

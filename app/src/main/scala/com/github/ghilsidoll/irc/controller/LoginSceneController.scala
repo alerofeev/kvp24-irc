@@ -24,6 +24,11 @@ class LoginSceneController {
   @FXML
   protected var loginButton: Button = _
 
+  /**
+   * Валидирует значение логина
+   * @param login _
+   * @return
+   */
   def isLoginValid(login: String): Boolean = {
     var error = false
 
@@ -38,6 +43,11 @@ class LoginSceneController {
     !error
   }
 
+  /**
+   * Валидирует значение порта
+   * @param port _
+   * @return
+   */
   def isPortValid(port: String): Boolean = {
     var error = false
 
@@ -48,6 +58,10 @@ class LoginSceneController {
     !error
   }
 
+  /**
+   * Авторизует пользователя
+   * @param event _
+   */
   def login(event: Event): Unit = {
     val login = loginTextField.getText
     val port = portTextField.getText
