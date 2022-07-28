@@ -1,8 +1,8 @@
-package com.github.ghilsidoll.irc.controller
+package com.github.alerofeev.irc.controller
 
 import akka.actor.typed.ActorSystem
-import com.github.ghilsidoll.irc.actor.RootBehavior
-import com.github.ghilsidoll.irc.actor.RootBehavior.PostMessage
+import com.github.alerofeev.irc.actor.RootBehavior
+import com.github.alerofeev.irc.actor.RootBehavior.PostMessage
 import com.typesafe.config.ConfigFactory
 import javafx.application.Platform
 import javafx.event.{Event, EventHandler}
@@ -57,8 +57,12 @@ class ChatSceneController(private val login: String) {
    * @param port _
    * @param controller контроллер ChatScene
    */
-  def startup(port: Int, controller: ChatSceneController): Unit = {
-    val config = ConfigFactory.parseString(s"""akka.remote.artery.canonical.port=$port""")
+  def startup(address: String, port: String, controller: ChatSceneController): Unit = {
+    val config = ConfigFactory.parseString(
+      s"""akka.remote.artery.canonical.port=$port
+         |akka.remote.artery.canonical.hostname=$address
+         |akka.cluster.seed-nodes=["akka://chat@$address:25251", "akka://chat@$address:25252"]"""
+        .stripMargin)
       .withFallback(ConfigFactory.load("application.conf"))
 
     actorSystem = ActorSystem(RootBehavior(controller), "chat", config)

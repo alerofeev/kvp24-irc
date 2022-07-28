@@ -1,12 +1,12 @@
-package com.github.ghilsidoll.irc.actor
+package com.github.alerofeev.irc.actor
 
 import akka.actor.typed.Behavior
 import akka.actor.typed.pubsub.Topic
 import akka.actor.typed.pubsub.Topic.Publish
 import akka.actor.typed.scaladsl.Behaviors
 import akka.cluster.typed.Cluster
-import com.github.ghilsidoll.irc.controller.ChatSceneController
-import com.github.ghilsidoll.irc.event.{MessagePosted, SessionEvent}
+import com.github.alerofeev.irc.controller.ChatSceneController
+import com.github.alerofeev.irc.event.{MessagePosted, SessionEvent}
 
 object RootBehavior {
 

@@ -1,4 +1,4 @@
-package com.github.ghilsidoll.irc.controller
+package com.github.alerofeev.irc.controller
 
 import javafx.fxml.FXML
 import javafx.scene.control.Label

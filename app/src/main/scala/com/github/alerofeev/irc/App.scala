@@ -1,4 +1,4 @@
-package com.github.ghilsidoll.irc
+package com.github.alerofeev.irc
 
 import javafx.application.Application
 import javafx.fxml.FXMLLoader

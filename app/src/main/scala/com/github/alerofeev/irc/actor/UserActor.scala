@@ -1,9 +1,9 @@
-package com.github.ghilsidoll.irc.actor
+package com.github.alerofeev.irc.actor
 
 import akka.actor.typed.Behavior
 import akka.actor.typed.scaladsl.Behaviors
-import com.github.ghilsidoll.irc.controller.ChatSceneController
-import com.github.ghilsidoll.irc.event.{MessagePosted, SessionEvent}
+import com.github.alerofeev.irc.controller.ChatSceneController
+import com.github.alerofeev.irc.event.{MessagePosted, SessionEvent}
 
 object UserActor {
   def apply(controller: ChatSceneController): Behavior[SessionEvent] =

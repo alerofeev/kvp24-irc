@@ -5,11 +5,12 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainScene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="264.0" prefWidth="400.0" styleClass="background-color-default" stylesheets="@../style/main.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.ghilsidoll.irc.controller.LoginSceneController">
+<BorderPane fx:id="mainScene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="264.0" prefWidth="360.0" styleClass="background-color-default" stylesheets="@../style/main.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.alerofeev.irc.controller.LoginSceneController">
    <center>
       <VBox alignment="CENTER" spacing="20.0" BorderPane.alignment="CENTER">
          <padding>
@@ -20,12 +21,25 @@
                <Font name="Ubuntu" size="16.0" />
             </font>
          </TextField>
-         <TextField fx:id="portTextField" prefHeight="45.0" prefWidth="220.0" promptText="Порт" styleClass="login-text-field">
-            <font>
-               <Font name="Ubuntu" size="16.0" />
-            </font>
-         </TextField>
-         <Button fx:id="loginButton" mnemonicParsing="false" prefHeight="41.0" prefWidth="86.0" styleClass="login-button" text="Войти">
+         <HBox prefHeight="45.0" prefWidth="219.0">
+            <TextField fx:id="addressTextField" prefHeight="44.0" prefWidth="278.0" promptText="IP-адрес" styleClass="login-text-field">
+               <font>
+                  <Font name="Ubuntu" size="16.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </TextField>
+            <TextField fx:id="portTextField" prefHeight="44.0" prefWidth="202.0" promptText="Порт" styleClass="login-text-field">
+               <font>
+                  <Font name="Ubuntu" size="16.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
+            </TextField>
+         </HBox>
+         <Button fx:id="loginButton" defaultButton="true" mnemonicParsing="false" prefHeight="41.0" prefWidth="86.0" styleClass="login-button" text="Войти">
             <font>
                <Font name="Ubuntu Bold" size="15.0" />
             </font>
@@ -42,12 +56,12 @@
       </Pane>
    </top>
    <left>
-      <Pane prefHeight="206.0" prefWidth="60.0" BorderPane.alignment="CENTER" />
+      <Pane prefHeight="206.0" prefWidth="40.0" BorderPane.alignment="CENTER" />
    </left>
    <right>
-      <Pane prefHeight="206.0" prefWidth="60.0" BorderPane.alignment="CENTER" />
+      <Pane prefHeight="206.0" prefWidth="40.0" BorderPane.alignment="CENTER" />
    </right>
    <bottom>
-      <Pane prefHeight="35.0" prefWidth="400.0" BorderPane.alignment="CENTER" />
+      <Pane prefHeight="30.0" prefWidth="400.0" BorderPane.alignment="CENTER" />
    </bottom>
 </BorderPane>
