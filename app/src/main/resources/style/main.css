@@ -28,14 +28,9 @@
     -fx-text-fill: #ccc;
 }
 
-.chat-text-field:focused {
-    -fx-border-style: hidden
-}
-
-.scroll-pane:focused {
-    -fx-border-style: hidden;
-    -fx-border-width: 0;
-    -fx-border-insets: 0;
+.send-button, .send-button:hover, .send-button:pressed {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
 }
 
 /* Authorization scene styles */
@@ -72,6 +67,12 @@
 }
 
 /* Scrollbar style */
+
+.scroll-pane:focused {
+    -fx-border-style: hidden;
+    -fx-border-width: 0;
+    -fx-border-insets: 0;
+}
 
 .scroll-bar:vertical {
     -fx-background-color: #0e1621;
@@ -113,18 +114,4 @@
 
 .message-box-container {
     -fx-background-radius: 10px;
-}
-
-/* DialogBox scene styles */
-
-.dialog-box {
-    -fx-background-color: #17212b
-}
-
-.dialog-box:hover {
-    -fx-background-color: rgba(204, 204, 204, 0.2)
-}
-
-.dialog-box:focused {
-    -fx-background-color: #2b5278
 }

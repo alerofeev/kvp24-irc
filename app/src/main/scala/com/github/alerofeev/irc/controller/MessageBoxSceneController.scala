@@ -15,15 +15,6 @@ class MessageBoxSceneController {
   @FXML
   protected var modifierLabel: Label = _
 
-  /**
-   * Настраивает поле с сообщением перед выводом на экран
-   * @param login _
-   * @param messageContent _
-   * @param modifier код для дополнительной подписи рядом с ником.
-   *                 -1 - сообщение групповое (без подписи)
-   *                 0 - сообщение от вас
-   *                 1 - сообщение вам (приватное сообщение)
-   */
   def setContent(login: String, messageContent: String, modifier: Int = -1): Unit = {
     loginLabel.setText(login)
     messageContentLabel.setText(messageContent)

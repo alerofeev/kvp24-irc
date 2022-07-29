@@ -2,6 +2,7 @@
 
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
@@ -17,7 +18,7 @@
    <top>
       <VBox prefHeight="46.0" prefWidth="1000.0" styleClass="background-color-left-pane" BorderPane.alignment="CENTER">
          <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="1000.0">
-            <Label fx:id="loginLabel" text="Login" textFill="#cccccc">
+            <Label fx:id="loginLabel" textFill="#cccccc">
                <HBox.margin>
                   <Insets left="20.0" />
                </HBox.margin>
@@ -31,11 +32,11 @@
    </top>
    <center>
       <VBox alignment="BOTTOM_CENTER" prefHeight="20.0" prefWidth="100.0" styleClass="background-color-center-pane" BorderPane.alignment="CENTER">
-         <ScrollPane fx:id="chatScrollPane" hbarPolicy="NEVER" prefHeight="668.0" prefWidth="629.0" styleClass="background-color-center-pane">
-            <VBox fx:id="chatContainer" alignment="BOTTOM_CENTER" minHeight="568.0" minWidth="0.0" prefWidth="626.0" styleClass="background-color-center-pane" />
+         <ScrollPane fx:id="chatScrollPane" hbarPolicy="NEVER" prefHeight="569.0" prefWidth="629.0" styleClass="background-color-center-pane">
+            <VBox fx:id="chatContainer" alignment="BOTTOM_CENTER" minHeight="566.0" minWidth="0.0" prefWidth="628.0" styleClass="background-color-center-pane" />
          </ScrollPane>
          <Pane prefHeight="1.0" prefWidth="628.0" styleClass="border-color-default" stylesheets="@../style/main.css" />
-         <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="629.0" spacing="20.0" styleClass="background-color-left-pane">
+         <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="630.0" spacing="20.0" styleClass="background-color-left-pane">
             <VBox.margin>
                <Insets />
             </VBox.margin>
@@ -45,9 +46,13 @@
                   <String fx:value="background-color-left-pane" />
                </styleClass></TextField>
             <TextField fx:id="recipientTextField" prefHeight="24.0" prefWidth="311.0" promptText="Получатель" />
-            <ImageView fx:id="sendMessageButton" fitHeight="24.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
-               <Image url="@../image/send.png" />
-            </ImageView>
+            <Button fx:id="sendMessageButton" defaultButton="true" mnemonicParsing="false" prefHeight="33.0" prefWidth="24.0" styleClass="send-button">
+               <graphic>
+                  <ImageView fitHeight="24.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                     <Image url="@../image/send.png" />
+                  </ImageView>
+               </graphic>
+            </Button>
             <padding>
                <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
             </padding>

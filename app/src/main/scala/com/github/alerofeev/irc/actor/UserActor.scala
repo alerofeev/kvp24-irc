@@ -1,12 +1,12 @@
 package com.github.alerofeev.irc.actor
 
+import com.github.alerofeev.irc.controller.MainSceneController
+import com.github.alerofeev.irc.event.{MessagePosted, SessionEvent, UserUp}
 import akka.actor.typed.Behavior
 import akka.actor.typed.scaladsl.Behaviors
-import com.github.alerofeev.irc.controller.ChatSceneController
-import com.github.alerofeev.irc.event.{MessagePosted, SessionEvent}
 
 object UserActor {
-  def apply(controller: ChatSceneController): Behavior[SessionEvent] =
+  def apply(controller: MainSceneController): Behavior[SessionEvent] =
     Behaviors.setup { context =>
 
     val selfName: String = context.self.path.name
