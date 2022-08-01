@@ -18,7 +18,7 @@ class MessageBoxSceneController {
   @FXML
   protected var modifierLabel: Label = _
 
-  def setContent(from: String, messageContent: String, modifier: Modifiers = Modifiers.PUBLIC): Unit = {
+  def setContent(from: String, to: String, messageContent: String, modifier: Modifiers = Modifiers.PUBLIC): Unit = {
     loginLabel.setText(from)
     messageContentLabel.setText(messageContent)
 
@@ -28,7 +28,11 @@ class MessageBoxSceneController {
         modifierLabel.setText("[Вам]")
         modifierLabel.setTextFill(Color.rgb(255, 65, 75))
       case Modifiers.YOURS =>
-        modifierLabel.setText("[Вы]")
+        if (to.isEmpty) {
+          modifierLabel.setText("[Вы]")
+        } else {
+          modifierLabel.setText(s"""[Вы] > [$to]""")
+        }
         modifierLabel.setTextFill(Color.rgb(38, 228, 89))
     }
   }

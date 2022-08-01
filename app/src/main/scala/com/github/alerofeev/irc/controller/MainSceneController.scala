@@ -64,12 +64,12 @@ class MainSceneController(private val login: String) {
     })
   }
 
-  def displayMessage(from: String, content: String, modifier: Modifiers = Modifiers.PUBLIC): Unit = {
+  def displayMessage(from: String, to: String, content: String, modifier: Modifiers = Modifiers.PUBLIC): Unit = {
     Platform.runLater(() => {
       val loader: FXMLLoader = new FXMLLoader(Objects.requireNonNull(getClass.getResource(
         "/view/template/messageBoxScene.fxml")))
       val node: VBox = loader.load()
-      loader.getController.asInstanceOf[MessageBoxSceneController].setContent(from, content, modifier)
+      loader.getController.asInstanceOf[MessageBoxSceneController].setContent(from, to, content, modifier)
       chatContainer.getChildren.add(node)
 
       chatScrollPane.setVvalue(1d)

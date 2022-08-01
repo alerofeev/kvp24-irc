@@ -14,14 +14,14 @@ object UserActor {
 
     Behaviors.receiveMessage {
 
-      case MessagePosted(message, from, _) if from == selfName =>
-        controller.displayMessage(from, message, Modifiers.YOURS)
+      case MessagePosted(message, from, to) if from == selfName =>
+        controller.displayMessage(from, to, message, Modifiers.YOURS)
         Behaviors.same
       case MessagePosted(message, from, to) if to == selfName =>
-        controller.displayMessage(from, message, Modifiers.PRIVATE)
+        controller.displayMessage(from, to, message, Modifiers.PRIVATE)
         Behaviors.same
       case MessagePosted(message, from, to) if to.isEmpty =>
-        controller.displayMessage(from, message)
+        controller.displayMessage(from, to, message)
         Behaviors.same
       case MessagePosted(_, _, _) => Behaviors.same
       case LoginPosted(login) =>
