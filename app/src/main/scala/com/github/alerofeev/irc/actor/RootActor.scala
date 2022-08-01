@@ -33,13 +33,15 @@ object RootActor {
         case MemberChange(event) =>
           event match {
             case MemberUp(_) =>
+
               val thread = new Thread {
                 override def run(): Unit = {
-                  Thread.sleep(5000)
+                  Thread.sleep(3000)
                   topic ! Publish(LoginPosted(user.path.name))
                 }
               }
               thread.start()
+
             case _: MemberEvent => // ignored
           }
           Behaviors.same

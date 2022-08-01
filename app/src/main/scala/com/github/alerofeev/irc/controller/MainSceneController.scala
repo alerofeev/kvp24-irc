@@ -3,6 +3,8 @@ package com.github.alerofeev.irc.controller
 import com.github.alerofeev.irc.actor.RootActor
 import com.github.alerofeev.irc.actor.RootActor.PostMessage
 import akka.actor.typed.ActorSystem
+import com.github.alerofeev.irc.modifier.Modifiers
+import com.github.alerofeev.irc.modifier.Modifiers.Modifiers
 import javafx.application.Platform
 import javafx.event.Event
 import javafx.fxml.{FXML, FXMLLoader}
@@ -61,7 +63,7 @@ class MainSceneController(private val login: String) {
     })
   }
 
-  def displayMessage(login: String, content: String, modifier: Int = -1): Unit = {
+  def displayMessage(login: String, content: String, modifier: Modifiers = Modifiers.PUBLIC): Unit = {
     Platform.runLater(() => {
       val loader: FXMLLoader = new FXMLLoader(Objects.requireNonNull(getClass.getResource(
         "/view/template/messageBoxScene.fxml")))
@@ -89,14 +91,6 @@ class MainSceneController(private val login: String) {
     })
   }
 
-  private def sendMessage(): Unit = {
-    if (messageTextField.getText.nonEmpty) {
-      val recipient: String = recipientChoiceBox.getValue
-      actorSystem ! PostMessage(messageTextField.getText,
-        if (recipient == null || recipient == "Group") "" else recipient)
-    }
-  }
-
   def initialize(): Unit = {
     Platform.runLater(() => mainScene.requestFocus())
 
@@ -105,7 +99,11 @@ class MainSceneController(private val login: String) {
     loginLabel.setText(login)
 
     sendMessageButton.setOnAction(_ => {
-      sendMessage()
+      if (messageTextField.getText.nonEmpty) {
+        val recipient: String = recipientChoiceBox.getValue
+        actorSystem ! PostMessage(messageTextField.getText,
+          if (recipient == null || recipient == "Group") "" else recipient)
+      }
     })
   }
 }
