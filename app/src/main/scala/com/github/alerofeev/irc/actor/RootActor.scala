@@ -7,12 +7,13 @@ import akka.actor.typed.scaladsl.Behaviors
 import akka.cluster.ClusterEvent.{MemberEvent, MemberUp}
 import akka.cluster.typed.Cluster
 import com.github.alerofeev.irc.controller.MainSceneController
-import com.github.alerofeev.irc.event.{LoginPosted, MessagePosted, SessionEvent}
+import com.github.alerofeev.irc.event.{LoginPosted, LoginRemoved, MessagePosted, SessionEvent}
 
 object RootActor {
 
   sealed trait Command
   final case class PostMessage(message: String, to: String) extends Command
+  final case class Logout(login: String) extends Command
   private final case class MemberChange(event: MemberEvent) extends Command
 
   def apply(controller: MainSceneController): Behavior[Command] = {
@@ -28,7 +29,10 @@ object RootActor {
 
       Behaviors.receiveMessage {
         case PostMessage(message, to) =>
-          topic ! Publish(MessagePosted(message, user.path.name, to))
+          topic ! Publish(MessagePosted(message, controller.getLogin, to))
+          Behaviors.same
+        case Logout(login) =>
+          topic ! Publish(LoginRemoved(login))
           Behaviors.same
         case MemberChange(event) =>
           event match {

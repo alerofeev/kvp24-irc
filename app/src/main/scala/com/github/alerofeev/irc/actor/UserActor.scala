@@ -1,7 +1,7 @@
 package com.github.alerofeev.irc.actor
 
 import com.github.alerofeev.irc.controller.MainSceneController
-import com.github.alerofeev.irc.event.{LoginPosted, MessagePosted, SessionEvent}
+import com.github.alerofeev.irc.event.{LoginPosted, LoginRemoved, MessagePosted, SessionEvent}
 import akka.actor.typed.Behavior
 import akka.actor.typed.scaladsl.Behaviors
 import com.github.alerofeev.irc.modifier.Modifiers
@@ -19,13 +19,16 @@ object UserActor {
       case MessagePosted(message, from, _) if from == selfName =>
         controller.displayMessage(from, message, Modifiers.YOURS)
         Behaviors.same
-      case MessagePosted(message, from, _) =>
+      case MessagePosted(message, from, to) if to == "" =>
         controller.displayMessage(from, message)
         Behaviors.same
       case LoginPosted(login) =>
         if (login != selfName) {
           controller.addRecipient(login)
         }
+        Behaviors.same
+      case LoginRemoved(login) =>
+        controller.removeRecipient(login)
         Behaviors.same
     }
   }

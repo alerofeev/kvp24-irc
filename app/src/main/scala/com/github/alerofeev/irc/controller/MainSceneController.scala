@@ -1,10 +1,12 @@
 package com.github.alerofeev.irc.controller
 
 import com.github.alerofeev.irc.actor.RootActor
-import com.github.alerofeev.irc.actor.RootActor.PostMessage
-import akka.actor.typed.ActorSystem
+import com.github.alerofeev.irc.actor.RootActor.{Logout, PostMessage}
 import com.github.alerofeev.irc.modifier.Modifiers
 import com.github.alerofeev.irc.modifier.Modifiers.Modifiers
+
+import akka.actor.typed.ActorSystem
+
 import javafx.application.Platform
 import javafx.event.Event
 import javafx.fxml.{FXML, FXMLLoader}
@@ -57,9 +59,8 @@ class MainSceneController(private val login: String) {
     stage.setScene(new Scene(loader.load(), 628, 660))
 
     stage.setOnCloseRequest((_: WindowEvent) => {
+      actorSystem ! Logout(login)
       actorSystem.terminate()
-      Platform.exit()
-      System.exit(0)
     })
   }
 
@@ -77,9 +78,7 @@ class MainSceneController(private val login: String) {
     })
   }
 
-  def addRecipient(recipientLogin: String): Unit = {
-    recipientSet += recipientLogin
-
+  def displayRecipientList(): Unit = {
     val lastValue: String = recipientChoiceBox.getValue
 
     Platform.runLater(() => {
@@ -89,6 +88,17 @@ class MainSceneController(private val login: String) {
       })
       recipientChoiceBox.setValue(lastValue)
     })
+  }
+
+
+  def addRecipient(recipientLogin: String): Unit = {
+    recipientSet += recipientLogin
+    displayRecipientList()
+  }
+
+  def removeRecipient(recipientLogin: String): Unit = {
+    recipientSet -= recipientLogin
+    displayRecipientList()
   }
 
   def initialize(): Unit = {

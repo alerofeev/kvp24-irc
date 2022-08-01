@@ -1,9 +1,9 @@
 package com.github.alerofeev.irc
 
-import javafx.application.Application
+import javafx.application.{Application, Platform}
 import javafx.fxml.FXMLLoader
 import javafx.scene.{Parent, Scene}
-import javafx.stage.Stage
+import javafx.stage.{Stage, WindowEvent}
 
 import java.io.IOException
 import java.util.Objects
@@ -22,6 +22,11 @@ class App extends Application {
     primaryStage.setTitle("kv24-irc")
     primaryStage.setResizable(false)
     primaryStage.show()
+
+    primaryStage.getScene.getWindow.setOnCloseRequest((_: WindowEvent) => {
+      Platform.exit()
+      System.exit(0)
+    })
   }
 }
 
