@@ -13,15 +13,17 @@ object UserActor {
     val selfName: String = context.self.path.name
 
     Behaviors.receiveMessage {
-      case MessagePosted(message, from, to) if to == selfName =>
-        controller.displayMessage(from, message, Modifiers.PRIVATE)
-        Behaviors.same
+
       case MessagePosted(message, from, _) if from == selfName =>
         controller.displayMessage(from, message, Modifiers.YOURS)
         Behaviors.same
-      case MessagePosted(message, from, to) if to == "" =>
+      case MessagePosted(message, from, to) if to == selfName =>
+        controller.displayMessage(from, message, Modifiers.PRIVATE)
+        Behaviors.same
+      case MessagePosted(message, from, to) if to.isEmpty =>
         controller.displayMessage(from, message)
         Behaviors.same
+      case MessagePosted(_, _, _) => Behaviors.same
       case LoginPosted(login) =>
         if (login != selfName) {
           controller.addRecipient(login)

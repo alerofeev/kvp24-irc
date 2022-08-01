@@ -18,8 +18,8 @@ class MessageBoxSceneController {
   @FXML
   protected var modifierLabel: Label = _
 
-  def setContent(login: String, messageContent: String, modifier: Modifiers = Modifiers.PUBLIC): Unit = {
-    loginLabel.setText(login)
+  def setContent(from: String, messageContent: String, modifier: Modifiers = Modifiers.PUBLIC): Unit = {
+    loginLabel.setText(from)
     messageContentLabel.setText(messageContent)
 
     modifier match {
