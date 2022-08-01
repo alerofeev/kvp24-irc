@@ -2,13 +2,11 @@ package com.github.alerofeev.irc.controller
 
 import com.github.alerofeev.irc.actor.RootActor
 import com.github.alerofeev.irc.actor.RootActor.PostMessage
-
 import akka.actor.typed.ActorSystem
-
 import javafx.application.Platform
 import javafx.event.Event
 import javafx.fxml.{FXML, FXMLLoader}
-import javafx.scene.control.{Button, Label, ScrollPane, TextField}
+import javafx.scene.control.{Button, ChoiceBox, Label, ScrollPane, TextField}
 import javafx.scene.{Node, Scene}
 import javafx.scene.layout.{BorderPane, VBox}
 import javafx.stage.{Screen, Stage, WindowEvent}
@@ -19,11 +17,10 @@ class MainSceneController(private val login: String) {
 
   private final var actorSystem: ActorSystem[RootActor.Command] = _
 
-  @FXML
-  protected var chatContainer: VBox = _
+  private var recipientSet: Set[String] = Set("Group")
 
   @FXML
-  protected var chatPreviewContainer: VBox = _
+  protected var chatContainer: VBox = _
 
   @FXML
   protected var chatScrollPane: ScrollPane = _
@@ -38,7 +35,7 @@ class MainSceneController(private val login: String) {
   protected var messageTextField: TextField = _
 
   @FXML
-  protected var recipientTextField: TextField = _
+  protected var recipientChoiceBox: ChoiceBox[String] = _
 
   @FXML
   protected var sendMessageButton: Button = _
@@ -78,11 +75,25 @@ class MainSceneController(private val login: String) {
     })
   }
 
+  def addRecipient(recipientLogin: String): Unit = {
+    recipientSet += recipientLogin
+
+    val lastValue: String = recipientChoiceBox.getValue
+
+    Platform.runLater(() => {
+      recipientChoiceBox.getItems.clear()
+      recipientSet.foreach(value => {
+        recipientChoiceBox.getItems.add(value)
+      })
+      recipientChoiceBox.setValue(lastValue)
+    })
+  }
+
   private def sendMessage(): Unit = {
     if (messageTextField.getText.nonEmpty) {
-      val recipient: String = recipientTextField.getText
+      val recipient: String = recipientChoiceBox.getValue
       actorSystem ! PostMessage(messageTextField.getText,
-        if (recipient == null || recipient.isBlank) "" else recipient)
+        if (recipient == null || recipient == "Group") "" else recipient)
     }
   }
 

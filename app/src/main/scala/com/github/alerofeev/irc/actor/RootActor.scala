@@ -7,7 +7,7 @@ import akka.actor.typed.scaladsl.Behaviors
 import akka.cluster.ClusterEvent.{MemberEvent, MemberUp}
 import akka.cluster.typed.Cluster
 import com.github.alerofeev.irc.controller.MainSceneController
-import com.github.alerofeev.irc.event.{MessagePosted, SessionEvent}
+import com.github.alerofeev.irc.event.{LoginPosted, MessagePosted, SessionEvent}
 
 object RootActor {
 
@@ -26,7 +26,6 @@ object RootActor {
       cluster.subscriptions ! akka.cluster.typed.Subscribe(context.messageAdapter(MemberChange),
         classOf[MemberEvent])
 
-
       Behaviors.receiveMessage {
         case PostMessage(message, to) =>
           topic ! Publish(MessagePosted(message, user.path.name, to))
@@ -34,7 +33,13 @@ object RootActor {
         case MemberChange(event) =>
           event match {
             case MemberUp(_) =>
-              println(cluster.state.members + " | " + user.path.name)
+              val thread = new Thread {
+                override def run(): Unit = {
+                  Thread.sleep(5000)
+                  topic ! Publish(LoginPosted(user.path.name))
+                }
+              }
+              thread.start()
             case _: MemberEvent => // ignored
           }
           Behaviors.same
